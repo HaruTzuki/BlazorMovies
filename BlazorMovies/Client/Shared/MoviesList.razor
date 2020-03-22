@@ -8,22 +8,44 @@
     </ElementTemplate>
 </GenericList>
 
+<Confirmation @ref="confirmation" onCancel="onCancel" onCorfirm="onConfirm">
+    <div class="text-muted">
+        Do you wish to delete this @movieToBeDeleted.Title?
+    </div>
+</Confirmation>
 
 @code {
+    Confirmation confirmation;
     [Parameter] public List<Movie> Movies { get; set; }
 
     bool displayButtons = true;
+    Movie movieToBeDeleted;
 
     private async Task DeleteMovie(Movie movie)
     {
-        await js.MyFunction("customer message");
+        movieToBeDeleted = movie;
+        confirmation.Show();
+        //await js.MyFunction("customer message");
 
-        var confirm = await js.Confirm($"Are you sure your want to delete {movie.Title}?");
+        //var confirm = await js.Confirm($"Are you sure your want to delete {movie.Title}?");
 
-        if (confirm)
-        {
-            Movies.Remove(movie);
-        }
+        //if (confirm)
+        //{
+        //    Movies.Remove(movie);
+        //}
+    }
+
+    void onConfirm()
+    {
+        Movies.Remove(movieToBeDeleted);
+        confirmation.Hide();
+        movieToBeDeleted = null;
+    }
+
+    void onCancel()
+    {
+        confirmation.Hide();
+        movieToBeDeleted = null;
     }
 
     protected override void OnInitialized()

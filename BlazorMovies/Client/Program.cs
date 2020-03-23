@@ -13,8 +13,6 @@ namespace BlazorMovies.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.Services.AddSingleton<SingletonService>();
-            builder.Services.AddTransient<TrasnsientService>();
             builder.Services.AddTransient<IRepository, RepositoryInMemory>();
             builder.RootComponents.Add<App>("app");
 

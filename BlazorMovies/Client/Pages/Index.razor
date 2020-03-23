@@ -1,14 +1,11 @@
 ﻿@page "/"
-@inject SingletonService singleton
 @inject IRepository repository
 
-    <p>Transient count: @singleton.Valor</p>
     <div>
         <h3>Movie</h3>
         <MoviesList Movies="movies"/>
     </div>
 
-    <button @onclick="AddNewMovie">Add new movie</button>
 
 @code{
     private List<Movie> movies;
@@ -17,11 +14,6 @@
     {
         //await Task.Delay(2000);
         movies = repository.GetMovies();
-        base.OnInitialized();
     }
 
-    private void AddNewMovie()
-    {
-        movies.Add(new Movie() { Title = "Movie Sample", ReleaseTime = DateTime.Today });
-    }
 }

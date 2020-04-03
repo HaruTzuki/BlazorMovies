@@ -1,4 +1,6 @@
 ﻿@page "/person/create"
+@inject IPersonRepository personRepository
+@inject NavigationManager nagivationManager
  
 <h3>CreatePerson</h3>
 
@@ -8,8 +10,19 @@
 @code {
     Person Person = new Person();
 
-    private void Create()
+    private async Task Create()
     {
         Console.WriteLine("Creating person...");
+
+        try
+        {
+            await personRepository.CreatePerson(Person);
+            nagivationManager.NavigateTo("people");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
     }
 }
